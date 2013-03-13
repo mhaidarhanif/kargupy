@@ -1,0 +1,89 @@
+# REFERENSI
+
+[Simulasi Rekening TDL 201X] (http://www.pln.co.id/simulasi/tagihan/index.php)
+[Simulasi Rekening TDL 2010] (http://pln-jatim.co.id/red/?m=sim&p=simrek2010)
+[TDL 2010] (https://wikisopo.files.wordpress.com/2012/05/tdl-2010.xlsx)
+[Rumus TDL 2010] (http://wikipediapln.files.wordpress.com/2012/03/rumus.xlsx)
+[Porting to Python 3] (http://python3porting.com)
+
+# Yang Harus Dilakukan
+
+Pindah sumber kode Python ke versi 3
+Berdasar dan evaluasi TDL 2012
+Pembagian golongan: R1/R2/R3, S1/S2/S3
+Tambah PPJ per wilayah yang mempegaruhi kWh
+Ada yang berdasarkan pulsa prabayar
+Basis data TDL sederhana
+Semua golongan: Rumah Tangga, Sosial, Bisnis, Industri, Kantor, Penerangan, Traksi, Curah, Layanan Khusus
+
+# Yang Akan Dilakukan
+
+Masukan biaya suai
+Data masukan dapat disimpan ke berkas
+Perapihan dalam bentuk GUI
+
+# Rumus
+
+Base Cost	| Biaya Dasar	= kWh gol * PkWh
+Subsc. Cost | Biaya Abonemen= PkVA gol * kVA
+Gross Cost	| Biaya Kotor	= Biaya Dasar + Biaya Abonemen
+Net Cost	| Biaya Bersih	= Pajak 10% * Biaya Kotor
+PSLT		| PPJU			= Pajak Daerah * Biaya Bersih
+Other		| Lainnya		= Faktor X
+Total Cost	| Biaya Total	= Biaya Bersih + PPJU + Lainnya
+
+# Kasus
+
+R3, 6600 VA, 720 kWh = Rp 1jt+
+R1, 1300 VA, 350 kWh = Rp 276rb+
+Pulsa Rp 500rb bisa 400-500 kWh, otomatis disesuaikan
+
+# Yang Sudah Diketahui
+
+Manual dan token meteran listrik
+Perhitungan nyata sangat berbeda dengan soal Fisika
+PLN tidak mempublikasikan tabel TDL 2012 secara jelas langsung
+Simulasi PLN hanya menghitung harga dasar, tidak detail, masih TDL 2010
+Pasca bayar bisa terdapat blok biaya yang bisa menjadikan lebih murah
+Pra bayar bebas biaya abonemen yang ditagih per bulan
+Pajak TDL rata-rata sekarang semuanya 10%
+PPJ dihitung terpisah dan berbeda setiap wilayah
+Prabayar dan pasca bayar beda sedikit
+Kenaikan TDL bersubsidi 3 bulan 1 kali, mulai November Rp 796/kWh
+
+# Yang Bisa Dijelaskan
+
+Bukan berarti ide asli tapi tidak meniru
+Buat versi sendiri, luring (offline), sumber terbuka, dan dapat dimodifikasi
+Bahasa Inggris untuk mempersingkat istilah dan waktu pengembangan
+Klarifikasi purwarupa, simulasi perkiraan maksimum pada 2012
+Bentuk aplikasi hanya praktis sederhana dan target masih ke personal
+Tabel lain hanya perhitungan bukan aplikasi dan tidak dapat ditransfer
+Masukan dan hitungan berdasarkan daya (watt) per alat elektronik dan waktu (jam) yang diketahui langsung, tanpa harus mengetahui hasil kWh yang perlu dihitung atau dilihat di meteran listrik
+Memperkirakan tanpa harus terjadi dahulu sehingga dapat dihitung sebelum membeli elektronik dengan daya tertentu
+Penerapan alternatif yang murah di masa depan pada alat elektronik
+
+# Hal Serupa
+
+Google PowerMeter : Khusus USA, tidak dilanjutkan
+http://google.com/powermeter
+Belkin WeMo : Mahal, Hanya iOS, belum sumber terbuka
+http://belkin.com/wemo
+Nest The Learning Thermostat : Mahal, tidak cocok di Indonesia
+http://nest.com
+
+# Yang Harus Ditanyakan
+
+Lama presentasi : 10 menit
+Bentuk dan cara presentasi : Biasa tanpa demonstrasi kecuali diminta
+
+# Yang Dipresentasikan
+
+1. Konsep awal
+2. Perbandingan dan kelebihan
+3. Tampilan demonstrasi
+4. Cara Kerja
+
+# Jadwal
+
+Sesi 1 | 18 September 2012 | 13.00-14.30 | Ruang 3 | Moderator : Dr. Sudaryanto

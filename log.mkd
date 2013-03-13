@@ -1,0 +1,32 @@
+## 0.1 [2012-05-05]
+-  Initial CLI program
+
+## 0.2 [2012-05-14]
+-  Functional style
+-  Program finished
+-  Some parts are missing
+
+## 0.3 [2012-05-16]
+-  Working program
+-  Few bugs detected
+
+## 0.4 [2012-05-17]
+-  Unified program flow
+-  Using new string format
+
+## 0.5 [2012-05-27]
+-  Better formatting
+
+## 0.6 [2012-06-04]
+-  Fixed few flaw operation
+
+## 0.7 [2012-06-11]
+-  Fully working
+
+## 0.8 [2012-07-05]
+-  Changed few design
+-  Revamped calculation
+-  Streamlined comments
+-  "Burden" to "Subscription"
+-  Ported to Python 3.x
+-  Prepaid and postpaid info
