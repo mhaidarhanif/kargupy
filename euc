@@ -1,0 +1,154 @@
+#!/usr/bin/python3
+# Kargupy
+# Energy Usage Calculator
+version = 0.8
+
+import os
+title = "Energy Usage Calculator"
+L1 = "=================================================="
+L2 = "--------------------------------------------------"
+
+def euc():
+  global VA, KVA, NEA
+  print(L1)
+  print(title, version)
+  print(L2)
+  VA = eval(input("Household Power (VA) : "))
+  KVA = VA / float(1000)
+  def askNEA():
+    global NEA, dataW, dataH
+    NEA = eval(input("Number of electronic appliances : "))
+    if NEA > 1000:
+      print("[Impossible!]")
+      askNEA()
+    dataW = []; dataH = []
+    print("[Input your data based on maximum/day]")
+    for n in range(1,NEA+1):
+      def askEA():
+        global W,H
+        ansW = "EA {}\t| Power (Watt) : ".format(n)
+        ansH = "\t| Usage (Hour) : "
+        W = eval(input(ansW)) # ask W
+        if W > 100000 or W <= 0:
+          print("[Impossible power!]")
+          askEA()
+        H = eval(input(ansH)) # ask H
+        if H > 24 or H <= 0:
+          print("[Impossible usage in a day!]")
+          askEA()
+        else:
+          dataW.append(W)
+          dataH.append(H)
+      askEA()
+  askNEA()
+  countDaily(dataW,dataH)
+
+def countDaily(dataW,dataH):
+  global dataWHn, dataWH, HW, DWH, DKWH
+  HW = 0; DWH = 0; DKWH = 0
+  dataWHn = []
+  for x in range(len(dataW)): # append dataW & dataH to dataWHn
+    W = dataW[x]
+    H = dataH[x]
+    dataWHn.append([W,H])
+  for W in dataW: # count HW
+    HW += W
+  dataWH = []
+  for W,H in dataWHn: # append W * H to dataWH
+    WH = W * H
+    dataWH.append(WH)
+  if HW <= VA: # check W <= VA
+    for WH in dataWH:
+      DWH += WH
+    DKWH = DWH / float(1000)
+    countMonthly(DKWH)
+  else:
+    print("[Usage exceeded!]")
+    reportFail()
+
+def countMonthly(DKWH):
+  global MKWH, SC, MPKWH, TAX, MC1, MC2, MT1, MC3, MC4, MT2
+  MKWH = DKWH * 30
+  if VA < 450:
+    SC = KVA * 5000
+    MPKWH = 415
+  elif VA < 900:
+    SC = KVA * 10000
+    MPKWH = 605
+  elif VA < 1300:
+    SC = KVA * 15000
+    MPKWH = 790
+  elif VA < 2200:
+    SC = KVA * 25000
+    MPKWH = 605
+  elif VA < 3500:
+    SC = KVA * 27000
+    MPKWH = 650
+  elif VA < 200000:
+    SC = KVA * 30500
+    MPKWH = 1330
+  else:
+    SC = 0; MPKWH = 0
+  TAX = 0.1
+  MC1 = (MKWH * MPKWH) + SC; MT1 = MC1*TAX; MC2 = MC1 + MT1
+  MC3 = (MKWH * MPKWH); MT2 = MC3*TAX; MC4 = MC3 + MT2
+  report()
+
+def report():
+  print(L2)
+  print("Household Power\t\t= {} VA".format(VA))
+  print("[Result based on maximum estimation]")
+  for n in range(1,NEA+1):
+    print("Electronic Appliance {}\t= {} W * {} H = {} Wh".format(
+    n,dataW[n-1],dataH[n-1],dataWH[n-1]))
+  print("Hourly  Watt\t\t= {} Wh".format(HW))
+  print("Daily   Watt Hour\t= {} Wh".format(DWH))
+  print("Daily   kWh\t\t= {} kWh".format(DKWH))
+  print("Monthly kWh\t\t= {} kWh".format(MKWH))
+  print("Subscription Cost/kWh\t= Rp {}".format(SC))
+  print("Monthly Price/kWh\t= Rp {}".format(MPKWH))
+  print("Monthly Cost w/o Tax (prepaid)\t= Rp {}".format(MC3))
+  print("Monthly Cost w/o Tax (postpaid)\t= Rp {}".format(MC1))
+  print("Monthly Tax\t\t= {}%".format(TAX*100))
+  print(L2)
+  print("Monthly Cost (prepaid)\t= Rp {}".format(MC4))
+  print("Monthly Cost (postpaid)\t= Rp {}".format(MC2))
+  print(L1)
+  again()
+
+def reportFail():
+  print(L2)
+  print("Household Power\t\t= {} VA".format(VA))
+  print(L2)
+  print("[Result based on maximum estimation]")
+  for n in range(1,NEA+1):
+    print("Electronic Appliance {}\t= {} W * {} H = {} Wh".format(
+    n,dataW[n-1],dataH[n-1],dataWH[n-1]))
+  print("Hourly  Watt\t\t= {} W".format(HW))
+  print("""
+  Your usage is over from maximum possible capability in an hour/day.
+  You need to calculate again or disable some appliances.
+  """)
+  print(L1)
+  again()
+
+def again():
+  a = input("Calculate again [Y/N]? ")
+  if a == "Y" or a == "y":
+    print(""); run()
+  elif a == "N" or a == "n":
+    exit()
+  else:
+    print("[Wrong choice. Please answer Y or N]")
+    again()
+
+def clear():
+  os.system(['clear','cls'][os.name == 'nt'])
+
+def run():
+  try:
+    euc()
+  except:
+    print("[Exited!]")
+    exit()
+euc()

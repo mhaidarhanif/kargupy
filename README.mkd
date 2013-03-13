@@ -1,0 +1,140 @@
+# Energy Usage Calculator (EUC) / Kargupy
+
+Build Version 0.8
+EUC/Kargupy Documentation (lang=en-US)
+
+[![EUC/Kargupy Logo](https://raw.github.com/mhaidarh/kargupy/master/logo/euc-logo-text_red-trans-small.png)](https://github.com/mhaidarh/kargupy/ "EUC/Kargupy logo")
+
+[![EUC/Kargupy Screenshot](https://raw.github.com/mhaidarh/kargupy/master/screen/euc-cli_0.8_light.png)](https://github.com/mhaidarh/kargupy/ "EUC/Kargupy light screenshot")
+
+## Intro
+
++ Calculate home energy usage per day and month
++ Estimate energy cost which will be paid monthly
++ Help saving energy by knowing estimation
+- Calculation is not from live data or history
+- Based on maximum possibility
+- Accurate prediction is not guaranteed
+
+* * * * *
+
+## Base Formula
+
+```
+VA = W
+KVA = KW
+WHn = W * H
+DWH = WH1 + .. + WHn [NEA]
+MWH = TWH * 30
+MKWH = MWH / 1000
+MB = FKWH * P
+```
+
+## Additional Formula
+
+```
+DWH < VA
+Based on maximum usage & time per day
+Possibility : Result - 50 %
+```
+
+## Declaration
+
+```
+VA = Volt-ampere (VA)
+W = Watt (W)
+WHn = Watt of n / Hour (Wh) [Limited to 24]
+DWH = Daily Watt / Hour (Wh) [Limited to VA]
+MWH = Monthly Watt / Hour (Wh)
+MKWH = Monthly KiloWatt / Hour (kWh)
+MC = Monthly Cost (Rp)
+```
+
+## Usage | Monthly | Tax
+
+```
+>= 6600 VA = Non-Subsidy = Rp 1.000 / kWh
+<  6600 VA = Subsidy     = Rp   600 / kWh
+TP = 5 % = 0.05
+```
+
+* * * * *
+
+## Input Example
+
+```
+[Separator I]
+[Title]
+[Separator II]
+- Name : Person
+- Household Power (VA) : 2200
+- Number of electronic appliances : 3 [NEA]
+  Electronic appliances list :
+  EA 1 | Power (Watt) = 10
+  -    | Usage (Hour) = 1 [Limited to 24]
+  -  2 | Power (Watt) = 20
+  -    | Usage (Hour) = 2
+  -  3 | Power (Watt) = 30
+  -    | Usage (Hour) = 3
+```
+
+## Process Example
+
+```
+WH1 = 10 * 1 = 10
+WH2 = 20 * 2 = 40
+WH3 = 30 * 3 = 90
+DWH = 10 + 40 + 90 = 140
+MWH = 140 * 30 = 4200
+MKWH = 4200 / 1000 = 4.2
+MB = 4.2 * 600 = 2520
+```
+
+## Output Example
+
+```
+[Separator II]
+Your name         = Person
+Household power   = 2200 VA
+Electronic 1 Watt = 10 Wh
+Electronic 2 Watt = 40 Wh
+Electronic 3 Watt = 90 Wh
+Daily   Watt Hour = 140 Wh
+Monthly Watt Hour = 4200 Wh
+Monthly kWh       = 4.2 kWh
+Monthly Price/kWh = Rp 600
+Monthly Bills     = Rp 2520
+[Separator I]
+```
+
+* * * * *
+
+## Future Formula
+
+```
+I = V / R
+V = I * R
+P = I^2 * R
+P = V^2 / R
+W = I^2 * R * t
+W = (V^2 * t) / R
+W = P * t
+TAX = MP + (MP * TP)
+```
+
+## Future Features
+
+- Naming each electronic appliance item.
+- Using future formula
+- Specific tax by place & location
+- Pluggable Authentication Module (PAM)
+
+## Reference
+
+- [Electricity pricing](http://en.wikipedia.org/wiki/Electricity_pricing)
+- [Tarif dasar listrik](http://id.wikipedia.org/wiki/Tarif_dasar_listrik)
+
+## Future reference
+
+- [Cost of electricity by source](http://en.wikipedia.org/wiki/Cost_of_electricity_by_source)
+- [TDL 2004](http://plnbukittinggi.com/webplncbkt/images/stories/TDL%202004%20&%20SE%20018.pdf)
